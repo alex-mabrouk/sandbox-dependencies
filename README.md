@@ -18,7 +18,7 @@ It is **packages-only**: it owns the package definitions under `packages/` and t
 ## KuboCD Concepts
 
 - **Package**: a versioned OCI artifact that bundles a KuboCD application descriptor and one or more Helm charts. The manifests under `packages/` define the packages published by this repository.
-- **Connection**: what a package publishes for others to consume, declared under `outputs` and taken by a consumer as a `connectionRef` parameter. `cnpg-postgresql` publishes one, `keycloak` consumes the database one.
+- **Connection**: what a package publishes for others to consume, declared under `outputs` and taken by a consumer through an `inputs` entry, whose name is a parameter. `cnpg-postgresql` publishes one, `keycloak` consumes the database one.
 
 Packages are deployed through KuboCD **Releases** that read a single platform **Context**. Those deployment resources are maintained in [`OKDP/okdp-sandbox`](https://github.com/OKDP/okdp-sandbox), not here.
 
@@ -53,16 +53,16 @@ Each package is a single KuboCD manifest under `packages/<layer>/<name>/`, and t
 
 | Package | Tag | Description |
 | --- | --- | --- |
-| [`cert-manager`](./packages/system/cert-manager) | `1.17.1-p08` | cert-manager, with the optional trust-manager bundle and cluster certificate issuers |
-| [`cloudnative-pg`](./packages/system/cloudnative-pg) | `1.29.1-p01` | CloudNativePG operator covering the PostgreSQL cluster lifecycle |
-| [`cnpg-postgresql`](./packages/system/cnpg-postgresql) | `18.3-p03` | Logical PostgreSQL databases, owners and credentials managed by CloudNativePG |
-| [`coredns-patch`](./packages/system/coredns-patch) | `1.0.0-p05` | CoreDNS patch resolving the ingress suffix to the ingress controller |
-| [`dns-server`](./packages/system/dns-server) | `1.0.0-p04` | Lightweight DNS server resolving the sandbox domain for local development |
-| [`external-secrets`](./packages/system/external-secrets) | `0.15.1-p02` | External Secrets Operator, syncing secrets from an external backend into Kubernetes Secrets |
+| [`cert-manager`](./packages/system/cert-manager) | `2.0.0` | cert-manager, with the optional trust-manager bundle and cluster certificate issuers |
+| [`cloudnative-pg`](./packages/system/cloudnative-pg) | `2.0.0` | CloudNativePG operator covering the PostgreSQL cluster lifecycle |
+| [`cnpg-postgresql`](./packages/system/cnpg-postgresql) | `2.0.0` | Logical PostgreSQL databases, owners and credentials managed by CloudNativePG |
+| [`coredns-patch`](./packages/system/coredns-patch) | `2.0.0` | CoreDNS patch resolving the ingress suffix to the ingress controller |
+| [`dns-server`](./packages/system/dns-server) | `2.0.0` | Lightweight DNS server resolving the sandbox domain for local development |
+| [`external-secrets`](./packages/system/external-secrets) | `2.0.0` | External Secrets Operator, syncing secrets from an external backend into Kubernetes Secrets |
 | [`ingress-nginx`](./packages/system/ingress-nginx) | `2.0.0` | NGINX ingress controller, in `nodePort`, `hostPort` or `metallb` mode |
-| [`keycloak`](./packages/system/keycloak) | `24.4.11-p14` | Keycloak identity and access management |
-| [`local-secrets-provider`](./packages/system/local-secrets-provider) | `1.0.0-p06` | Kubernetes Secrets provisioned from a static list, a local stand-in for a secret manager |
-| [`tools`](./packages/system/tools) | `1.0.0-p01` | Reloader, replicator and secret-generator utilities |
+| [`keycloak`](./packages/system/keycloak) | `2.0.0` | Keycloak identity and access management |
+| [`local-secrets-provider`](./packages/system/local-secrets-provider) | `2.0.0` | Kubernetes Secrets provisioned from a static list, a local stand-in for a secret manager |
+| [`tools`](./packages/system/tools) | `2.0.0` | Replicator and secret-generator utilities |
 
 ## Building Packages
 
