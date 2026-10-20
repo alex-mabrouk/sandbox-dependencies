@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.0 (2026-10-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* the package version no longer embeds the upstream version: the tag is `2.0.0`, the upstream version is `appVersion` in the descriptor
+* the parameters are a closed JSON Schema: an unknown parameter is refused
+* the role `dns-server` is renamed `okdp.io/dns`
+* `target` must be an IPv4 address, `nodePort` is limited to 30000-32767
+
+### Features
+
+* describe the package with contract 0.2
+
 ## [1.0.1](https://github.com/OKDP/sandbox-dependencies/compare/dns-server/v1.0.0...dns-server/v1.0.1) (2026-09-25)
 
 
