@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.0 (2026-10-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* the package version no longer embeds the upstream version: the tag is `2.0.0`, the upstream version is `appVersion` in the descriptor
+* the parameters are a closed JSON Schema: an unknown parameter is refused
+* the role `external-secrets` is renamed `okdp.io/secrets-sync`
+* the package is no longer protected: protect the Release instead
+
+### Features
+
+* describe the package with contract 0.2
+
 ## [1.0.1](https://github.com/OKDP/sandbox-dependencies/compare/external-secrets/v1.0.0...external-secrets/v1.0.1) (2026-09-25)
 
 
