@@ -4,13 +4,6 @@
   "include-v-in-tag": true,
   "draft-pull-request": true,
   "packages": {
-    "packages/services/seaweedfs": {
-      "component": "seaweedfs",
-      "release-type": "simple",
-      "include-component-in-tag": true,
-      "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
-    },
     "packages/system/cert-manager": {
       "component": "cert-manager",
       "release-type": "simple",
@@ -62,20 +55,6 @@
     },
     "packages/system/keycloak": {
       "component": "keycloak",
-      "release-type": "simple",
-      "include-component-in-tag": true,
-      "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
-    },
-    "packages/system/kubauth": {
-      "component": "kubauth",
-      "release-type": "simple",
-      "include-component-in-tag": true,
-      "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
-    },
-    "packages/system/kubocd-webhooks": {
-      "component": "kubocd-webhooks",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",

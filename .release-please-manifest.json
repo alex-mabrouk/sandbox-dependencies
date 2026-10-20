@@ -1,5 +1,4 @@
 {
-  "packages/services/seaweedfs": "1.0.2",
   "packages/system/cert-manager": "1.0.1",
   "packages/system/cloudnative-pg": "1.0.1",
   "packages/system/cnpg-postgresql": "1.0.1",
@@ -8,8 +7,6 @@
   "packages/system/external-secrets": "1.0.1",
   "packages/system/ingress-nginx": "1.0.1",
   "packages/system/keycloak": "1.0.1",
-  "packages/system/kubauth": "1.0.1",
-  "packages/system/kubocd-webhooks": "1.0.1",
   "packages/system/local-secrets-provider": "1.0.1",
   "packages/system/tools": "1.0.1"
 }
