@@ -38,8 +38,7 @@ packages/
 │   ├── kubauth/
 │   ├── kubocd-webhooks/
 │   ├── local-secrets-provider/
-│   ├── tools/
-│   └── vault/
+│   └── tools/
 └── services/           # Services
     └── seaweedfs/
 sandbox-dependencies-values.yaml   # OCI publish target (packageRepository), the source of truth used by CI
@@ -71,7 +70,6 @@ Each package is a single KuboCD manifest under `packages/<layer>/<name>/`, and t
 | [`kubocd-webhooks`](./packages/system/kubocd-webhooks) | `v0.3.2-p01` | Second stage of the KuboCD deployment |
 | [`local-secrets-provider`](./packages/system/local-secrets-provider) | `1.0.0-p06` | Kubernetes Secrets provisioned from a static list, a local stand-in for a secret manager |
 | [`tools`](./packages/system/tools) | `1.0.0-p01` | Reloader, replicator and secret-generator utilities |
-| [`vault`](./packages/system/vault) | `0.29.1-p01` | HashiCorp Vault, the secret backend a SecretStore points at, in dev mode by default |
 
 ### Services
 

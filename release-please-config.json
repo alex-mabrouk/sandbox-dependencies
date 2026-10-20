@@ -94,13 +94,6 @@
       "include-component-in-tag": true,
       "tag-separator": "/",
       "changelog-path": "CHANGELOG.md"
-    },
-    "packages/system/vault": {
-      "component": "vault",
-      "release-type": "simple",
-      "include-component-in-tag": true,
-      "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
     }
   },
   "changelog-sections": [
