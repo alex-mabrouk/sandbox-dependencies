@@ -16,51 +16,64 @@
 
 apiVersion: v1alpha1
 name: tools
-tag: 1.0.0-1.0.1
-protected: false
+tag: 2.0.0 # x-release-please-version
 description: |
-  Miscellaneous Kubernetes tools including reloader, replicator and secret-generator
+  Miscellaneous Kubernetes tools: replicator and secret-generator
 usage:
   text: |
     Tools package provides useful utilities for Kubernetes clusters:
-    - Reloader: Automatically restarts pods when ConfigMaps/Secrets change
     - Replicator: Replicates secrets/configmaps between namespaces
     - Secret Generator: Automatically generates secrets
-schema:
-  parameters:
-    properties:
-      namespace: { type: string, default: "kube-tools" }
-      reloader:
-        properties:
-          enabled: { type: boolean, default: true }
-      replicator:
-        properties:
-          enabled: { type: boolean, default: true }
-      secretGenerator:
-        properties:
-          enabled: { type: boolean, default: true }
-modules:
-  - name: reloader
-    enabled: "{{ .Parameters.reloader.enabled }}"
-    timeout: 10m
-    source:
-      helmRepository:
-        url: https://stakater.github.io/stakater-charts
-        chart: reloader
-        version: 1.0.72
-    values: |
-      reloader:
-        deployment:
-          securityContext:
-            seccompProfile:
-              type: RuntimeDefault
-          containerSecurityContext:
-            capabilities:
-              drop:
-                - ALL
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+# OKDP package descriptor (contract 0.2). Name and version are the name and tag
+# above. Its parameters are the single source of schema.parameters below.
+extensions:
+  okdp.io:
+    apiVersion: okdp.io/v1alpha1
+    kind: PackageDescriptor
+    appVersion: 1.0.0
+    displayName: Platform tools
+    description: Secret and ConfigMap replication between namespaces, and generated secrets
+    category: platform
+    maturity: stable
+    edition: community
+    license: Apache-2.0
+    documentation: https://github.com/mittwald/kubernetes-replicator
+    maintainer: OKDP
+    keywords: [replicator, secret-generator]
+    capabilities:
+      - name: okdp.io/platform-tools
+    compatibility:
+      kubernetes: ">=1.28.0"
+    parameters: &parameters
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      additionalProperties: false
+      properties:
+        replicator:
+          type: object
+          additionalProperties: false
+          title: Replicator
+          description: "kubernetes-replicator, copies Secrets and ConfigMaps between namespaces."
+          x-okdp-group: Tools
+          x-okdp-order: 1
+          properties:
+            enabled: { type: boolean, default: true }
+        secretGenerator:
+          type: object
+          additionalProperties: false
+          title: Secret generator
+          description: "kubernetes-secret-generator, fills Secrets with generated values."
+          x-okdp-group: Tools
+          x-okdp-order: 2
+          properties:
+            enabled: { type: boolean, default: true }
+    lifecycle:
+      applyTimeout: 10m
+      rollback: supported
 
+schema:
+  parameters: *parameters
+modules:
   - name: replicator
     enabled: "{{ .Parameters.replicator.enabled }}"
     timeout: 10m
@@ -109,5 +122,5 @@ modules:
         runAsNonRoot: true
         runAsUser: 1000
 roles:
-  - tools
+  - okdp.io/platform-tools
 dependencies: []

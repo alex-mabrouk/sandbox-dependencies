@@ -4,96 +4,105 @@
   "include-v-in-tag": true,
   "draft-pull-request": true,
   "packages": {
-    "packages/services/seaweedfs": {
-      "component": "seaweedfs",
-      "release-type": "simple",
-      "include-component-in-tag": true,
-      "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
-    },
     "packages/system/cert-manager": {
       "component": "cert-manager",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "cert-manager.yaml"
+      ]
     },
     "packages/system/cloudnative-pg": {
       "component": "cloudnative-pg",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "cloudnative-pg.yaml"
+      ]
     },
     "packages/system/cnpg-postgresql": {
       "component": "cnpg-postgresql",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "cnpg-postgresql.yaml"
+      ]
     },
     "packages/system/coredns-patch": {
       "component": "coredns-patch",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "coredns-patch.yaml"
+      ]
     },
     "packages/system/dns-server": {
       "component": "dns-server",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "dns-server.yaml"
+      ]
     },
     "packages/system/external-secrets": {
       "component": "external-secrets",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "external-secrets.yaml"
+      ]
     },
     "packages/system/ingress-nginx": {
       "component": "ingress-nginx",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "ingress-nginx.yaml"
+      ]
     },
     "packages/system/keycloak": {
       "component": "keycloak",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
-    },
-    "packages/system/kubauth": {
-      "component": "kubauth",
-      "release-type": "simple",
-      "include-component-in-tag": true,
-      "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
-    },
-    "packages/system/kubocd-webhooks": {
-      "component": "kubocd-webhooks",
-      "release-type": "simple",
-      "include-component-in-tag": true,
-      "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "keycloak.yaml"
+      ]
     },
     "packages/system/local-secrets-provider": {
       "component": "local-secrets-provider",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "local-secrets-provider.yaml"
+      ]
     },
     "packages/system/tools": {
       "component": "tools",
       "release-type": "simple",
       "include-component-in-tag": true,
       "tag-separator": "/",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        "tools.yaml"
+      ]
     }
   },
   "changelog-sections": [

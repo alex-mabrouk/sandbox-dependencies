@@ -16,8 +16,7 @@
 
 apiVersion: v1alpha1
 name: dns-server
-tag: 1.0.0-1.0.1
-protected: false
+tag: 2.0.0 # x-release-please-version
 description: |
   DNS Server - Lightweight DNS server for local development
   Redirects *.okdp.sandbox to localhost for local development
@@ -26,11 +25,54 @@ usage:
     DNS Server provides local DNS resolution for development.
     Configure your local resolver to point to this DNS server.
     Exposed on NodePort for external access.
+# OKDP package descriptor (contract 0.2). Name and version are the name and tag
+# above. Its parameters are the single source of schema.parameters below.
+extensions:
+  okdp.io:
+    apiVersion: okdp.io/v1alpha1
+    kind: PackageDescriptor
+    appVersion: 2.90-r3
+    displayName: DNS server
+    description: Resolves the platform domain for the machines outside the cluster
+    category: platform
+    maturity: stable
+    edition: community
+    license: GPL-2.0-only
+    documentation: https://thekelleys.org.uk/dnsmasq/doc.html
+    maintainer: OKDP
+    keywords: [dns, dnsmasq]
+    capabilities:
+      - name: okdp.io/dns
+    compatibility:
+      kubernetes: ">=1.28.0"
+    parameters: &parameters
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      additionalProperties: false
+      properties:
+        target:
+          type: string
+          format: ipv4
+          default: "127.0.0.1"
+          title: Target address
+          description: "Address every name of the platform domain resolves to."
+          x-okdp-group: DNS
+          x-okdp-order: 1
+        nodePort:
+          type: integer
+          minimum: 30000
+          maximum: 32767
+          default: 30053
+          title: Node port
+          description: "UDP node port of the DNS service."
+          x-okdp-group: DNS
+          x-okdp-order: 2
+    lifecycle:
+      applyTimeout: 10m
+      rollback: supported
+
 schema:
-  parameters:
-    properties:
-      target: { type: string, default: "127.0.0.1" }
-      nodePort: { type: integer, default: 30053 }
+  parameters: *parameters
   context:
     properties:
       ingress:
@@ -71,5 +113,5 @@ modules:
           cpu: 100m
 
 roles:
-  - dns-server
+  - okdp.io/dns
 dependencies: []

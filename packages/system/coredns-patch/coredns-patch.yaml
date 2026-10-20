@@ -16,8 +16,7 @@
 
 apiVersion: v1alpha1
 name: coredns-patch
-tag: 1.0.0-1.0.1
-protected: false
+tag: 2.0.0 # x-release-please-version
 description: |
   CoreDNS configuration patch to resolve local domain names to ingress controller
 usage:
@@ -25,10 +24,46 @@ usage:
     CoreDNS Patch configures CoreDNS to automatically resolve domain names 
     matching the ingress suffix pattern to the ingress controller.
     This enables local development with custom domain names.
+# OKDP package descriptor (contract 0.2). Name and version are the name and tag
+# above. Its parameters are the single source of schema.parameters below.
+extensions:
+  okdp.io:
+    apiVersion: okdp.io/v1alpha1
+    kind: PackageDescriptor
+    appVersion: 1.0.0
+    displayName: CoreDNS patch
+    description: Resolves the platform domain inside the cluster to the ingress controller
+    category: platform
+    maturity: stable
+    edition: community
+    license: Apache-2.0
+    documentation: https://github.com/OKDP/sandbox-dependencies
+    maintainer: OKDP
+    keywords: [dns, coredns]
+    capabilities:
+      - name: okdp.io/dns-forwarding
+    compatibility:
+      kubernetes: ">=1.28.0"
+    parameters: &parameters
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      additionalProperties: false
+      properties:
+        ingressService:
+          type: string
+          minLength: 1
+          default: "ingress-nginx-controller.ingress-nginx.svc.cluster.local"
+          title: Ingress service
+          description: "Name the platform domain resolves to inside the cluster."
+          x-okdp-group: DNS
+          x-okdp-order: 1
+    lifecycle:
+      applyTimeout: 10m
+      rollback: unsupported
+      irreversible: "The CoreDNS configuration is patched in place and never restored, neither on rollback nor on uninstall."
+
 schema:
-  parameters:
-    properties:
-      ingressService: { type: string, default: "ingress-nginx-controller.ingress-nginx.svc.cluster.local" }
+  parameters: *parameters
   context:
     properties:
       ingress:
@@ -51,5 +86,5 @@ modules:
         nodeSelector:
           kubernetes.io/os: linux
 roles:
-  - coredns
+  - okdp.io/dns-forwarding
 dependencies: []

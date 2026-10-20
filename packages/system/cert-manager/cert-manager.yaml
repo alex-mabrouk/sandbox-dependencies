@@ -16,50 +16,95 @@
 
 apiVersion: v1alpha1
 name: cert-manager
-tag: 1.17.1-1.0.1
-protected: true
-schema:
-  parameters:
-    properties:
-      trust:
-        properties:
-          enabled: { type: boolean, default: false }
-          bundle:
-            properties:
-              name: { type: string, default: certs-bundle }
-              target:
-                properties:
-                  configMap:
-                    properties:
-                      enabled: { type: boolean, default: false }
-                      key: { type: string, default: "root-certs.pem" }
-                  secret:
-                    properties:
-                      enabled: { type: boolean, default: false }
-                      key: { type: string, default: "ca.crt" }
-      issuers:
-        properties:
-          enabled: { type: boolean, default: true }
-          caClusterIssuers:
-            items:
-              properties:
-                name: { type: string, required: true }
-                ca_crt: { type: string, required: true }
-                ca_key: { type: string, required: true }
-          selfSignedClusterIssuers:
-            items:
+tag: 2.0.0 # x-release-please-version
+# OKDP package descriptor (contract 0.2). Name and version are the name and tag
+# above. Its parameters are the single source of schema.parameters below.
+extensions:
+  okdp.io:
+    apiVersion: okdp.io/v1alpha1
+    kind: PackageDescriptor
+    appVersion: 1.17.1
+    displayName: cert-manager
+    description: TLS certificates of the platform, with an optional trust bundle and self-signed cluster issuers
+    category: security
+    maturity: stable
+    edition: community
+    license: Apache-2.0
+    documentation: https://cert-manager.io/docs/
+    maintainer: OKDP
+    keywords: [certificates, tls, trust-manager]
+    capabilities:
+      - name: okdp.io/certificate-manager
+    compatibility:
+      kubernetes: ">=1.29.0"
+    parameters: &parameters
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      additionalProperties: false
+      properties:
+        trust:
+          type: object
+          additionalProperties: false
+          title: Trust bundle
+          description: "trust-manager and the bundle of the platform CA certificates."
+          x-okdp-group: Trust
+          x-okdp-order: 1
+          properties:
+            enabled: { type: boolean, default: false, title: Enabled }
+            bundle:
               type: object
+              additionalProperties: false
               properties:
-                name: { type: string, required: true}
-                certificate:
+                name: { type: string, default: certs-bundle, title: Bundle name }
+                target:
                   type: object
+                  additionalProperties: false
                   properties:
-                    commonName: { type: string, default: "Self-Signed CA" }
-                    organization: { type: string, default: "OKDP" }
-                    country: { type: string, default: "US" }
-                    validity: { type: string, default: "8760h" }
-                    algorithm: { type: string, default: "ECDSA" }
-                    size: { type: integer, default: 256 }
+                    configMap:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        enabled: { type: boolean, default: false }
+                        key: { type: string, default: "root-certs.pem" }
+                    secret:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        enabled: { type: boolean, default: false }
+                        key: { type: string, default: "ca.crt" }
+        issuers:
+          type: object
+          additionalProperties: false
+          title: Cluster issuers
+          x-okdp-group: Issuers
+          x-okdp-order: 1
+          properties:
+            enabled: { type: boolean, default: true, title: Enabled }
+            selfSignedClusterIssuers:
+              type: array
+              title: Self-signed cluster issuers
+              items:
+                type: object
+                additionalProperties: false
+                required: [name]
+                properties:
+                  name: { type: string, minLength: 1 }
+                  certificate:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      commonName: { type: string, default: "Self-Signed CA" }
+                      organization: { type: string, default: "OKDP" }
+                      country: { type: string, default: "US" }
+                      validity: { type: string, default: "8760h" }
+                      algorithm: { type: string, enum: [RSA, ECDSA, Ed25519], default: "ECDSA" }
+                      size: { type: integer, default: 256 }
+    lifecycle:
+      applyTimeout: 15m
+      rollback: supported
+
+schema:
+  parameters: *parameters
   context:
     properties:
       certificateIssuers:
@@ -134,5 +179,5 @@ modules:
       - trust
       {{ end }}
 roles:
-  - certManager
+  - okdp.io/certificate-manager
 dependencies: []

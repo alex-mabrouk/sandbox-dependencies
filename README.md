@@ -11,14 +11,14 @@
 
 This repository builds and publishes the OKDP platform packages requirements used to operate platform services with [KuboCD](https://www.kubocd.io/).
 
-These packages are not part of the OKDP distribution itself. They are the prerequisites the sandbox depends on: cluster foundations (ingress, DNS, certificates, database operator, identity, secret management) and the object storage backing the platform services.
+These packages are not part of the OKDP distribution itself. They are the prerequisites the sandbox depends on: cluster foundations (ingress, DNS, certificates, database operator, identity, secret management).
 
 It is **packages-only**: it owns the package definitions under `packages/` and the CI that builds and publishes them as OCI artifacts. It does **not** own the deployment layer (releases, contexts, Flux/KuboCD bootstrap). Deployment lives in [`OKDP/okdp-sandbox`](https://github.com/OKDP/okdp-sandbox), which consumes the packages published here.
 
 ## KuboCD Concepts
 
 - **Package**: a versioned OCI artifact that bundles a KuboCD application descriptor and one or more Helm charts. The manifests under `packages/` define the packages published by this repository.
-- **Connection**: what a package publishes for others to consume, declared under `outputs` and taken by a consumer as a `connectionRef` parameter. `cnpg-postgresql` and `seaweedfs` publish theirs, `keycloak` consumes the database one.
+- **Connection**: what a package publishes for others to consume, declared under `outputs` and taken by a consumer through an `inputs` entry, whose name is a parameter. `cnpg-postgresql` publishes one, `keycloak` consumes the database one.
 
 Packages are deployed through KuboCD **Releases** that read a single platform **Context**. Those deployment resources are maintained in [`OKDP/okdp-sandbox`](https://github.com/OKDP/okdp-sandbox), not here.
 
@@ -26,28 +26,23 @@ Packages are deployed through KuboCD **Releases** that read a single platform **
 
 ```
 packages/
-├── system/             # Infrastructure & system packages
-│   ├── cert-manager/
-│   ├── cloudnative-pg/
-│   ├── cnpg-postgresql/
-│   ├── coredns-patch/
-│   ├── dns-server/
-│   ├── external-secrets/
-│   ├── ingress-nginx/
-│   ├── keycloak/
-│   ├── kubauth/
-│   ├── kubocd-webhooks/
-│   ├── local-secrets-provider/
-│   └── tools/
-└── services/           # Services
-    └── seaweedfs/
+└── system/             # Infrastructure & system packages
+    ├── cert-manager/
+    ├── cloudnative-pg/
+    ├── cnpg-postgresql/
+    ├── coredns-patch/
+    ├── dns-server/
+    ├── external-secrets/
+    ├── ingress-nginx/
+    ├── keycloak/
+    ├── local-secrets-provider/
+    └── tools/
 sandbox-dependencies-values.yaml   # OCI publish target (packageRepository), the source of truth used by CI
 ```
 
 Key paths:
 
 - [`packages/system`](./packages/system): infrastructure and platform foundation packages.
-- [`packages/services`](./packages/services): data and application service packages.
 - [`sandbox-dependencies-values.yaml`](./sandbox-dependencies-values.yaml): the OCI repository packages are published to.
 
 ## Packages
@@ -58,24 +53,16 @@ Each package is a single KuboCD manifest under `packages/<layer>/<name>/`, and t
 
 | Package | Tag | Description |
 | --- | --- | --- |
-| [`cert-manager`](./packages/system/cert-manager) | `1.17.1-p08` | cert-manager, with the optional trust-manager bundle and cluster certificate issuers |
-| [`cloudnative-pg`](./packages/system/cloudnative-pg) | `1.29.1-p01` | CloudNativePG operator covering the PostgreSQL cluster lifecycle |
-| [`cnpg-postgresql`](./packages/system/cnpg-postgresql) | `18.3-p03` | Logical PostgreSQL databases, owners and credentials managed by CloudNativePG |
-| [`coredns-patch`](./packages/system/coredns-patch) | `1.0.0-p05` | CoreDNS patch resolving the ingress suffix to the ingress controller |
-| [`dns-server`](./packages/system/dns-server) | `1.0.0-p04` | Lightweight DNS server resolving the sandbox domain for local development |
-| [`external-secrets`](./packages/system/external-secrets) | `0.15.1-p02` | External Secrets Operator, syncing secrets from an external backend into Kubernetes Secrets |
-| [`ingress-nginx`](./packages/system/ingress-nginx) | `4.12.1-p03` | NGINX ingress controller, in `nodePort`, `hostPort` or `metallb` mode |
-| [`keycloak`](./packages/system/keycloak) | `24.4.11-p14` | Keycloak identity and access management |
-| [`kubauth`](./packages/system/kubauth) | `0.3.0-snapshot-p01` | Kubernetes-native OIDC provider, where users, groups and OIDC clients are custom resources |
-| [`kubocd-webhooks`](./packages/system/kubocd-webhooks) | `v0.3.2-p01` | Second stage of the KuboCD deployment |
-| [`local-secrets-provider`](./packages/system/local-secrets-provider) | `1.0.0-p06` | Kubernetes Secrets provisioned from a static list, a local stand-in for a secret manager |
-| [`tools`](./packages/system/tools) | `1.0.0-p01` | Reloader, replicator and secret-generator utilities |
-
-### Services
-
-| Package | Tag | Description |
-| --- | --- | --- |
-| [`seaweedfs`](./packages/services/seaweedfs) | `4.17.0-p07` | Distributed file system exposing the S3, IAM and STS endpoints used as default object storage |
+| [`cert-manager`](./packages/system/cert-manager) | `2.0.0` | cert-manager, with the optional trust-manager bundle and cluster certificate issuers |
+| [`cloudnative-pg`](./packages/system/cloudnative-pg) | `2.0.0` | CloudNativePG operator covering the PostgreSQL cluster lifecycle |
+| [`cnpg-postgresql`](./packages/system/cnpg-postgresql) | `2.0.0` | Logical PostgreSQL databases, owners and credentials managed by CloudNativePG |
+| [`coredns-patch`](./packages/system/coredns-patch) | `2.0.0` | CoreDNS patch resolving the ingress suffix to the ingress controller |
+| [`dns-server`](./packages/system/dns-server) | `2.0.0` | Lightweight DNS server resolving the sandbox domain for local development |
+| [`external-secrets`](./packages/system/external-secrets) | `2.0.0` | External Secrets Operator, syncing secrets from an external backend into Kubernetes Secrets |
+| [`ingress-nginx`](./packages/system/ingress-nginx) | `2.0.0` | NGINX ingress controller, in `nodePort`, `hostPort` or `metallb` mode |
+| [`keycloak`](./packages/system/keycloak) | `2.0.0` | Keycloak identity and access management |
+| [`local-secrets-provider`](./packages/system/local-secrets-provider) | `2.0.0` | Kubernetes Secrets provisioned from a static list, a local stand-in for a secret manager |
+| [`tools`](./packages/system/tools) | `2.0.0` | Replicator and secret-generator utilities |
 
 ## Building Packages
 
@@ -84,11 +71,7 @@ The target OCI repository is defined once in [`sandbox-dependencies-values.yaml`
 ### Basic Build Command
 
 ```bash
-# Build a system package
 kubocd package ./packages/system/cert-manager/cert-manager.yaml --ociRepoPrefix quay.io/okdp/sandbox-dependencies
-
-# Build a service package
-kubocd package ./packages/services/seaweedfs/seaweedfs.yaml --ociRepoPrefix quay.io/okdp/sandbox-dependencies
 ```
 
 ### Custom OCI Repository
@@ -96,9 +79,6 @@ kubocd package ./packages/services/seaweedfs/seaweedfs.yaml --ociRepoPrefix quay
 ```bash
 # Using a different OCI registry
 kubocd package ./packages/system/cert-manager/cert-manager.yaml --ociRepoPrefix myregistry.io/my-org/packages
-
-# Using a different prefix for packages
-kubocd package ./packages/services/seaweedfs/seaweedfs.yaml --ociRepoPrefix harbor.company.com/okdp-prod
 ```
 
 ### Examples
@@ -117,7 +97,7 @@ kubocd package ./packages/system/keycloak/keycloak.yaml --ociRepoPrefix quay.io/
 
 Packages are pushed to: `{ociRepoPrefix}/{package-name}:{tag}`
 
-Example: `quay.io/okdp/sandbox-dependencies/seaweedfs:4.17.0-p07`
+Example: `quay.io/okdp/sandbox-dependencies/cert-manager:1.17.1-p08`
 
 ## GitHub CI and Publishing
 
