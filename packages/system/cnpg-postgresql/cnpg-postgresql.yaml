@@ -20,34 +20,88 @@
 # owner passwordSecret published as secretRef.
 apiVersion: v1alpha1
 name: cnpg-postgresql
-tag: 18.3.0-1.0.1
-protected: false
+tag: 2.0.0 # x-release-please-version
 description: |
   Defines multiple logical PostgreSQL databases managed by the CloudNativePG operator within a single PostgreSQL
   instance (cluster) and includes ownership, access credentials, and lifecycle management through Kubernetes-native CRDs.
 usage:
   text: |
     Databases instances used in the sandbox
+# OKDP package descriptor (contract 0.2). Name and version are the name and tag
+# above. Its parameters are the single source of schema.parameters below.
+extensions:
+  okdp.io:
+    apiVersion: okdp.io/v1alpha1
+    kind: PackageDescriptor
+    appVersion: "18.3"
+    displayName: PostgreSQL
+    description: PostgreSQL server of the platform services, one logical database per service
+    category: database
+    maturity: stable
+    edition: community
+    license: PostgreSQL
+    documentation: https://cloudnative-pg.io/documentation/current/
+    maintainer: OKDP
+    keywords: [postgresql, database]
+    capabilities:
+      - name: okdp.io/platform-database
+    dependencies:
+      - capability: okdp.io/operator/postgresql.cnpg.io
+        providerScope: system-wide
+      - capability: okdp.io/secrets-backend
+        providerScope: system-wide
+    compatibility:
+      kubernetes: ">=1.31.0"
+    parameters: &parameters
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      additionalProperties: false
+      properties:
+        databases:
+          type: array
+          title: Databases
+          description: "Logical databases. Each one is published as a database-server connection named after it."
+          x-okdp-group: Databases
+          x-okdp-order: 1
+          items:
+            type: object
+            additionalProperties: false
+            required: [name, owner]
+            properties:
+              name: { type: string, minLength: 1 }
+              owner:
+                type: object
+                additionalProperties: false
+                required: [username, passwordSecret]
+                properties:
+                  username: { type: string, minLength: 1 }
+                  passwordSecret:
+                    type: string
+                    minLength: 1
+                    description: "Secret holding the owner credentials under username and password, also handed to the consumers."
+                    x-okdp-secret-ref: true
+              schemas:
+                type: array
+                items: { type: string }
+    endpoints:
+      - name: postgresql
+        kind: api
+        protocol: tcp
+        authentication: credentials
+        description: PostgreSQL protocol, read-write service
+    data:
+      - name: data
+        kind: database
+        description: Every logical database of the server
+        backup: https://cloudnative-pg.io/documentation/current/backup/
+    lifecycle:
+      applyTimeout: 10m
+      rollback: supported
+    health:
+      tcp: { endpoint: postgresql }
+
 schema:
-  parameters:
-    properties:
-      databases:
-        type: array
-        items:
-          properties:
-            name: { type: string, required: true }
-            # Required: the published Connection carries the owner's Secret,
-            # so a database without one has nothing to hand to a consumer.
-            owner:
-              required: true
-              properties:
-                username: { type: string, required: true }
-                # Owner credentials Secret (keys: username, password), also
-                # published as secretRef of the database Connection.
-                passwordSecret: { type: string, required: true }
-            schemas:
-              type: array
-              items: { type: string }
+  parameters: *parameters
 modules:
   - name: main
     timeout: 10m
@@ -84,7 +138,7 @@ outputs: |
       secretRef: "{{ .owner.passwordSecret }}"
   {{- end }}
 roles:
-  - database-server
+  - okdp.io/platform-database
 dependencies:
-  - pg-operator
-  - external-secrets
+  - okdp.io/operator/postgresql.cnpg.io
+  - okdp.io/secrets-backend
