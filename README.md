@@ -59,7 +59,7 @@ Each package is a single KuboCD manifest under `packages/<layer>/<name>/`, and t
 | [`coredns-patch`](./packages/system/coredns-patch) | `1.0.0-p05` | CoreDNS patch resolving the ingress suffix to the ingress controller |
 | [`dns-server`](./packages/system/dns-server) | `1.0.0-p04` | Lightweight DNS server resolving the sandbox domain for local development |
 | [`external-secrets`](./packages/system/external-secrets) | `0.15.1-p02` | External Secrets Operator, syncing secrets from an external backend into Kubernetes Secrets |
-| [`ingress-nginx`](./packages/system/ingress-nginx) | `4.12.1-p03` | NGINX ingress controller, in `nodePort`, `hostPort` or `metallb` mode |
+| [`ingress-nginx`](./packages/system/ingress-nginx) | `2.0.0` | NGINX ingress controller, in `nodePort`, `hostPort` or `metallb` mode |
 | [`keycloak`](./packages/system/keycloak) | `24.4.11-p14` | Keycloak identity and access management |
 | [`local-secrets-provider`](./packages/system/local-secrets-provider) | `1.0.0-p06` | Kubernetes Secrets provisioned from a static list, a local stand-in for a secret manager |
 | [`tools`](./packages/system/tools) | `1.0.0-p01` | Reloader, replicator and secret-generator utilities |
