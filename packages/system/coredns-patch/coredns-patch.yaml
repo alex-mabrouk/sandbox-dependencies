@@ -16,7 +16,7 @@
 
 apiVersion: v1alpha1
 name: coredns-patch
-tag: 2.0.0 # x-release-please-version
+tag: 2.0.0-alpha.1 # x-release-please-version
 description: |
   CoreDNS configuration patch to resolve local domain names to ingress controller
 usage:

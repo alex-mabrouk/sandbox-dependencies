@@ -16,7 +16,7 @@
 
 apiVersion: v1alpha1
 name: cloudnative-pg
-tag: 2.0.0 # x-release-please-version
+tag: 2.0.0-alpha.1 # x-release-please-version
 description: |
   CloudNativePG is the Kubernetes operator that covers the full lifecycle of a highly available PostgreSQL database cluster 
   with a primary/standby architecture, using native streaming replication.

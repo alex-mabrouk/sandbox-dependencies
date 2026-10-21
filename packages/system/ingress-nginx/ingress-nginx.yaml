@@ -16,7 +16,7 @@
 
 apiVersion: v1alpha1
 name: ingress-nginx
-tag: 2.0.0 # x-release-please-version
+tag: 2.0.0-alpha.1 # x-release-please-version
 description: |
   NGINX Ingress Controller for Kubernetes with support for multiple deployment modes
 usage:

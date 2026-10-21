@@ -18,7 +18,7 @@
 
 apiVersion: v1alpha1
 name: keycloak
-tag: 2.0.0 # x-release-please-version
+tag: 2.0.0-alpha.1 # x-release-please-version
 description: |
   Keycloak identity and access management for Kubernetes
 usage:
