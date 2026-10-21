@@ -26,6 +26,7 @@ usage:
     Keycloak provides centralized authentication and authorization.
     Access the admin console at https://keycloak.{{ .Context.ingress.suffix }}
     The admin password is in the Secret named by adminCredentialsSecret, key admin-password.
+    The groups scope puts the user's groups, by short name, in the groups claim.
 # OKDP package descriptor (contract 0.2). Name and version are the name and tag
 # above. Its parameters are the single source of schema.parameters below.
 extensions:
@@ -105,6 +106,7 @@ extensions:
           description: "Name of the database-server Connection Keycloak stores its data in."
           x-okdp-group: Database
           x-okdp-order: 1
+          x-okdp-connection: db
         memoryGi:
           type: number
           default: 2
@@ -270,10 +272,7 @@ schema:
   parameters: *parameters
 
 inputs:
-  - contract: database-server
-    alias: db
-    connectionRef:
-      name: "{{ .Parameters.db }}"
+  - { contract: database-server, alias: db, fromParameter: db }
 
 modules:
   - name: main
@@ -288,6 +287,9 @@ modules:
       {{- $dcrEnabled := $dcr.enabled -}}
       {{- $dcrTrustedHosts := ($dcr.trustedHosts | default (list (printf "*.%s" $.Context.ingress.suffix) "*.svc.cluster.local")) -}}
       {{- $dcrAllowedScopes := ($dcr.allowedScopes | default (list "groups")) -}}
+      {{- range .Parameters.clientScopes }}
+      {{- if eq .name "groups" }}{{ fail "clientScopes: groups is provided by the package" }}{{ end }}
+      {{- end }}
 
       global:
         security:
@@ -476,15 +478,41 @@ modules:
                 {{- end }}
               ],
               "clientScopes": [
-                {{- range $index, $scope := .Parameters.clientScopes }}
-                {{- if $index }},{{ end }}
+                {
+                  "id": "groups-scope-id",
+                  "name": "groups",
+                  "description": "Groups the user belongs to",
+                  "protocol": "openid-connect",
+                  "attributes": {
+                    "display.on.consent.screen": "true",
+                    "include.in.token.scope": "true"
+                  },
+                  "protocolMappers": [
+                    {
+                      "id": "groups-mapper-id",
+                      "name": "groups",
+                      "protocol": "openid-connect",
+                      "protocolMapper": "oidc-group-membership-mapper",
+                      "consentRequired": false,
+                      "config": {
+                        "access.token.claim": "true",
+                        "claim.name": "groups",
+                        "full.path": "false",
+                        "id.token.claim": "true",
+                        "introspection.token.claim": "true",
+                        "userinfo.token.claim": "true"
+                      }
+                    }
+                  ]
+                }
+                {{- range $index, $scope := .Parameters.clientScopes }},
                 {
                   "id": "{{ $scope.name }}-scope-id",
                   "name": "{{ $scope.name }}",
                   "description": "{{ $scope.description }}",
                   "protocol": "{{ $scope.protocol }}",
                   "attributes": {
-                    {{- $attrKeys := keys $scope.attributes | sortAlpha }}
+                    {{- $attrKeys := keys ($scope.attributes | default dict) | sortAlpha }}
                     {{- range $attrIndex, $key := $attrKeys }}
                     {{- if $attrIndex }},{{ end }}
                     "{{ $key }}": "{{ index $scope.attributes $key }}"
@@ -500,7 +528,7 @@ modules:
                       "protocolMapper": "{{ $mapper.protocolMapper }}",
                       "consentRequired": false,
                       "config": {
-                        {{- $configKeys := keys $mapper.config | sortAlpha }}
+                        {{- $configKeys := keys ($mapper.config | default dict) | sortAlpha }}
                         {{- range $configIndex, $key := $configKeys }}
                         {{- if $configIndex }},{{ end }}
                         "{{ $key }}": "{{ index $mapper.config $key }}"
