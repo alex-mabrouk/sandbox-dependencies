@@ -12,6 +12,7 @@
 ### Features
 
 * describe the package with contract 0.2
+* CloudNativePG 1.30.1, chart 0.29.1
 
 ## [1.0.1](https://github.com/OKDP/sandbox-dependencies/compare/cloudnative-pg/v1.0.0...cloudnative-pg/v1.0.1) (2026-09-25)
 

@@ -16,7 +16,7 @@
 
 apiVersion: v1alpha1
 name: cloudnative-pg
-tag: 2.0.0-alpha.1 # x-release-please-version
+tag: 2.0.0-alpha.2 # x-release-please-version
 description: |
   CloudNativePG is the Kubernetes operator that covers the full lifecycle of a highly available PostgreSQL database cluster 
   with a primary/standby architecture, using native streaming replication.
@@ -31,7 +31,7 @@ extensions:
   okdp.io:
     apiVersion: okdp.io/v1alpha1
     kind: PackageDescriptor
-    appVersion: 1.29.1
+    appVersion: 1.30.1
     displayName: CloudNativePG
     description: Kubernetes operator running highly available PostgreSQL clusters
     category: database
@@ -63,14 +63,14 @@ modules:
       helmRepository:
         url: https://cloudnative-pg.github.io/charts/
         chart: cloudnative-pg
-        version: 0.28.0
+        version: 0.29.1
     values: |
       config:
         clusterWide: true
       image:
         repository: ghcr.io/cloudnative-pg/cloudnative-pg
         pullPolicy: IfNotPresent
-        tag: "1.29.1"
+        tag: "1.30.1"
       resources:
         requests:
           cpu: 500m
