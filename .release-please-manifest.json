@@ -1,5 +1,5 @@
 {
-  "packages/system/cert-manager": "2.0.0-alpha.1",
+  "packages/system/cert-manager": "2.0.0-alpha.2",
   "packages/system/cloudnative-pg": "2.0.0-alpha.2",
   "packages/system/cnpg-postgresql": "2.0.0-alpha.2",
   "packages/system/coredns-patch": "2.0.0-alpha.1",
