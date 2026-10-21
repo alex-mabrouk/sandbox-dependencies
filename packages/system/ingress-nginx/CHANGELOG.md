@@ -13,6 +13,7 @@
 ### Features
 
 * describe the package with contract 0.2 ([4fb88a3](https://github.com/alex-mabrouk/sandbox-dependencies/commit/4fb88a3))
+* ingress-nginx controller 1.15.1, chart 4.15.1
 
 ## [1.0.1](https://github.com/OKDP/sandbox-dependencies/compare/ingress-nginx/v1.0.0...ingress-nginx/v1.0.1) (2026-09-25)
 
