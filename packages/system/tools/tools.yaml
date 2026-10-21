@@ -16,7 +16,7 @@
 
 apiVersion: v1alpha1
 name: tools
-tag: 2.0.0 # x-release-please-version
+tag: 2.0.0-alpha.1 # x-release-please-version
 description: |
   Miscellaneous Kubernetes tools: replicator and secret-generator
 usage:

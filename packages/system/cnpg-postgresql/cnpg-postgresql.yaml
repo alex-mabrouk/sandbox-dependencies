@@ -20,7 +20,7 @@
 # owner passwordSecret published as secretRef.
 apiVersion: v1alpha1
 name: cnpg-postgresql
-tag: 2.0.0 # x-release-please-version
+tag: 2.0.0-alpha.1 # x-release-please-version
 description: |
   Defines multiple logical PostgreSQL databases managed by the CloudNativePG operator within a single PostgreSQL
   instance (cluster) and includes ownership, access credentials, and lifecycle management through Kubernetes-native CRDs.

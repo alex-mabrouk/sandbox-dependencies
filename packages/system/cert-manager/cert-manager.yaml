@@ -16,7 +16,7 @@
 
 apiVersion: v1alpha1
 name: cert-manager
-tag: 2.0.0 # x-release-please-version
+tag: 2.0.0-alpha.1 # x-release-please-version
 # OKDP package descriptor (contract 0.2). Name and version are the name and tag
 # above. Its parameters are the single source of schema.parameters below.
 extensions:

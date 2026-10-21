@@ -1,12 +1,12 @@
 {
-  "packages/system/cert-manager": "2.0.0",
-  "packages/system/cloudnative-pg": "2.0.0",
-  "packages/system/cnpg-postgresql": "2.0.0",
-  "packages/system/coredns-patch": "2.0.0",
-  "packages/system/dns-server": "2.0.0",
-  "packages/system/external-secrets": "2.0.0",
-  "packages/system/ingress-nginx": "2.0.0",
-  "packages/system/keycloak": "2.0.0",
-  "packages/system/local-secrets-provider": "2.0.0",
-  "packages/system/tools": "2.0.0"
+  "packages/system/cert-manager": "2.0.0-alpha.1",
+  "packages/system/cloudnative-pg": "2.0.0-alpha.1",
+  "packages/system/cnpg-postgresql": "2.0.0-alpha.1",
+  "packages/system/coredns-patch": "2.0.0-alpha.1",
+  "packages/system/dns-server": "2.0.0-alpha.1",
+  "packages/system/external-secrets": "2.0.0-alpha.1",
+  "packages/system/ingress-nginx": "2.0.0-alpha.1",
+  "packages/system/keycloak": "2.0.0-alpha.1",
+  "packages/system/local-secrets-provider": "2.0.0-alpha.1",
+  "packages/system/tools": "2.0.0-alpha.1"
 }
