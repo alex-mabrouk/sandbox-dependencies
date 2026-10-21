@@ -16,7 +16,7 @@
 
 apiVersion: v1alpha1
 name: tools
-tag: 2.0.0-alpha.1 # x-release-please-version
+tag: 2.0.0-alpha.2 # x-release-please-version
 description: |
   Miscellaneous Kubernetes tools: replicator and secret-generator
 usage:
@@ -81,7 +81,7 @@ modules:
       helmRepository:
         url: https://helm.mittwald.de
         chart: kubernetes-replicator
-        version: 2.9.2
+        version: 2.12.4
     values: |
       podSecurityContext:
         seccompProfile:
@@ -106,7 +106,7 @@ modules:
       helmRepository:
         url: https://helm.mittwald.de
         chart: kubernetes-secret-generator
-        version: 3.4.0
+        version: 3.4.1
     values: |
       fullnameOverride: secret-generator
       podSecurityContext:
