@@ -16,7 +16,7 @@
 
 apiVersion: v1alpha1
 name: ingress-nginx
-tag: 2.0.0-alpha.1 # x-release-please-version
+tag: 2.0.0-alpha.2 # x-release-please-version
 description: |
   NGINX Ingress Controller for Kubernetes with support for multiple deployment modes
 usage:
@@ -32,7 +32,7 @@ extensions:
   okdp.io:
     apiVersion: okdp.io/v1alpha1
     kind: PackageDescriptor
-    appVersion: 1.12.1
+    appVersion: 1.15.1
     displayName: Ingress NGINX
     description: HTTP and HTTPS entry point of the cluster
     category: platform
@@ -115,7 +115,7 @@ modules:
       helmRepository:
         url: https://kubernetes.github.io/ingress-nginx
         chart: ingress-nginx
-        version: 4.12.1
+        version: 4.15.1
     values: |
       controller:
         allowSnippetAnnotations: "false"

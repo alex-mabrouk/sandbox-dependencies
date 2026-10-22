@@ -14,6 +14,7 @@
 ### Features
 
 * describe the package with contract 0.2
+* cert-manager 1.20.4, trust-manager 0.25.0
 
 ## [1.0.1](https://github.com/OKDP/sandbox-dependencies/compare/cert-manager/v1.0.0...cert-manager/v1.0.1) (2026-09-25)
 

@@ -13,6 +13,7 @@
 ### Features
 
 * describe the package with contract 0.2
+* PostgreSQL 18.6
 
 ## [1.0.1](https://github.com/OKDP/sandbox-dependencies/compare/cnpg-postgresql/v1.0.0...cnpg-postgresql/v1.0.1) (2026-09-25)
 

@@ -13,6 +13,7 @@
 ### Features
 
 * describe the package with contract 0.2
+* External Secrets Operator 2.13.0
 
 ## [1.0.1](https://github.com/OKDP/sandbox-dependencies/compare/external-secrets/v1.0.0...external-secrets/v1.0.1) (2026-09-25)
 

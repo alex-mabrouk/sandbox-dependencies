@@ -13,6 +13,7 @@
 ### Features
 
 * describe the package with contract 0.2
+* kubernetes-replicator 2.12.4, kubernetes-secret-generator 3.4.1
 
 ## [1.0.1](https://github.com/OKDP/sandbox-dependencies/compare/tools/v1.0.0...tools/v1.0.1) (2026-09-25)
 
